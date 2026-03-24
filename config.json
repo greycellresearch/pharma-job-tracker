@@ -1,0 +1,40 @@
+{
+  "_comment": "Edit this file to add/remove tracked companies and regions. The scanner reads this on every run.",
+
+  "regions": {
+    "US": {
+      "label": "United States",
+      "countries": ["United States", "US", "USA"]
+    },
+    "EU": {
+      "label": "Europe",
+      "countries": ["Germany", "France", "Italy", "Spain", "Netherlands", "Belgium", "Sweden", "Switzerland", "United Kingdom", "UK", "England", "Scotland", "Wales"]
+    },
+    "Canada": {
+      "label": "Canada",
+      "countries": ["Canada"]
+    }
+  },
+
+  "companies": [
+    { "name": "Pfizer",              "abbr": "PFE",  "active": true, "careerUrl": "https://www.pfizer.com/about/careers" },
+    { "name": "Roche",               "abbr": "ROG",  "active": true, "careerUrl": "https://www.roche.com/careers" },
+    { "name": "Novartis",            "abbr": "NVS",  "active": true, "careerUrl": "https://www.novartis.com/careers" },
+    { "name": "AstraZeneca",         "abbr": "AZN",  "active": true, "careerUrl": "https://careers.astrazeneca.com" },
+    { "name": "Johnson & Johnson",   "abbr": "J&J",  "active": true, "careerUrl": "https://jobs.jnj.com" },
+    { "name": "Merck",               "abbr": "MRK",  "active": true, "careerUrl": "https://jobs.merck.com" },
+    { "name": "Eli Lilly",           "abbr": "LLY",  "active": true, "careerUrl": "https://careers.lilly.com" },
+    { "name": "AbbVie",              "abbr": "ABBV", "active": true, "careerUrl": "https://careers.abbvie.com" },
+    { "name": "Sanofi",              "abbr": "SNY",  "active": true, "careerUrl": "https://jobs.sanofi.com" },
+    { "name": "GSK",                 "abbr": "GSK",  "active": true, "careerUrl": "https://www.gsk.com/en-gb/careers" },
+    { "name": "Bayer",               "abbr": "BAY",  "active": true, "careerUrl": "https://career.bayer.com" },
+    { "name": "Boehringer Ingelheim","abbr": "BIE",  "active": true, "careerUrl": "https://www.boehringer-ingelheim.com/careers" },
+    { "name": "Bristol Myers Squibb","abbr": "BMS",  "active": true, "careerUrl": "https://careers.bms.com" },
+    { "name": "Amgen",               "abbr": "AMG",  "active": true, "careerUrl": "https://careers.amgen.com" },
+    { "name": "Gilead Sciences",     "abbr": "GILD", "active": true, "careerUrl": "https://gilead.wd1.myworkdayjobs.com/gileadcareers" },
+    { "name": "Takeda",              "abbr": "TAK",  "active": true, "careerUrl": "https://www.takeda.com/careers" },
+    { "name": "UCB",                 "abbr": "UCB",  "active": true, "careerUrl": "https://www.ucb.com/careers" },
+    { "name": "Ipsen",               "abbr": "IPS",  "active": false, "careerUrl": "https://www.ipsen.com/careers" },
+    { "name": "Servier",             "abbr": "SRV",  "active": false, "careerUrl": "https://www.servier.com/en/careers" }
+  ]
+}
