@@ -1,4 +1,4 @@
-yamlname: Weekly Pharma Job Scan
+name: Weekly Pharma Job Scan
 
 on:
   schedule:
