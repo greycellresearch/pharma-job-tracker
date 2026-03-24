@@ -1,0 +1,511 @@
+{
+  "lastScan": "2026-03-24T21:30:41.393Z",
+  "companies": [
+    {
+      "name": "Pfizer",
+      "abbr": "PFE",
+      "website": "https://www.pfizer.com/about/careers",
+      "jobs": []
+    },
+    {
+      "name": "Roche",
+      "abbr": "ROG",
+      "website": "https://www.roche.com/careers",
+      "jobs": []
+    },
+    {
+      "name": "Novartis",
+      "abbr": "NVS",
+      "website": "https://www.novartis.com/careers",
+      "jobs": []
+    },
+    {
+      "name": "AstraZeneca",
+      "abbr": "AZN",
+      "website": "https://careers.astrazeneca.com",
+      "jobs": []
+    },
+    {
+      "name": "Johnson & Johnson",
+      "abbr": "J&J",
+      "website": "https://jobs.jnj.com",
+      "jobs": [
+        {
+          "id": "johnson-johnson-medical-science-liaison-head-east-region-hematol",
+          "title": "Medical Science Liaison Head, East Region, Hematology",
+          "location": "Horsham, PA, United States",
+          "category": "clinical",
+          "date": "2024-06-15",
+          "url": "https://jobs.jnj.com/en/jobs/2406223728w/medical-science-liaison-head-east-region-hematology/",
+          "status": "new",
+          "region": "US"
+        },
+        {
+          "id": "johnson-johnson-msl-head-leukemia-lymphoma-oncology-horsham-pa-u",
+          "title": "MSL Head, Leukemia & Lymphoma Oncology",
+          "location": "Horsham, PA, United States",
+          "category": "clinical",
+          "date": "2023-06-10",
+          "url": "https://jobs.jnj.com/en/jobs/2306110009w/msl-head-leukemia-lymphoma-oncology/",
+          "status": "new",
+          "region": "US"
+        },
+        {
+          "id": "johnson-johnson-medical-science-liaison-immunology-gi-tennessee-",
+          "title": "Medical Science Liaison-Immunology GI-Tennessee",
+          "location": "Tennessee, United States",
+          "category": "clinical",
+          "date": "2023-06-14",
+          "url": "https://jobs.jnj.com/en/jobs/2306147187w/medical-science-liaison-immunology-gi-tennessee-janssen-scientific-affairs-inc/",
+          "status": "new",
+          "region": "US"
+        },
+        {
+          "id": "johnson-johnson-medical-science-liaison-gi-upstate-new-york-alba",
+          "title": "Medical Science Liaison - GI - Upstate New York",
+          "location": "Albany, NY, United States",
+          "category": "clinical",
+          "date": "2024-06-22",
+          "url": "https://jobs.jnj.com/en/jobs/2406224878w/medical-science-liaison-gi-upstate-new-york/",
+          "status": "new",
+          "region": "US"
+        },
+        {
+          "id": "johnson-johnson-commercial-marketing-manager-danvers-ma-united-s",
+          "title": "Commercial Marketing Manager",
+          "location": "Danvers, MA, United States",
+          "category": "commercial",
+          "date": "2024-06-19",
+          "url": "https://jobs.jnj.com/en/jobs/2406192137w/commercial-marketing-manager-1-of-2/",
+          "status": "new",
+          "region": "US"
+        },
+        {
+          "id": "johnson-johnson-manager-commercial-strategy-and-insights-raynham",
+          "title": "Manager, Commercial Strategy and Insights",
+          "location": "Raynham, MA, United States",
+          "category": "commercial",
+          "date": "2025-06-22",
+          "url": "https://jobs.jnj.com/en/jobs/2506229470w/manager-commercial-strategy-and-insights/",
+          "status": "new",
+          "region": "US"
+        },
+        {
+          "id": "johnson-johnson-brand-manager-oncology-solna-sweden",
+          "title": "Brand Manager Oncology",
+          "location": "Solna, Sweden",
+          "category": "commercial",
+          "date": "2024-06-17",
+          "url": "https://jobs.jnj.com/en/jobs/2406176929w/brand-manager-oncology-johnson-johnson/",
+          "status": "new",
+          "region": "EU"
+        },
+        {
+          "id": "johnson-johnson-principal-scientist-discovery-data-science-la-jo",
+          "title": "Principal Scientist, Discovery Data Science",
+          "location": "La Jolla, CA, United States",
+          "category": "data",
+          "date": "2024-06-18",
+          "url": "https://jobs.jnj.com/en/jobs/2406182137w/principal-scientist-discovery-data-science-1-of-2-positions/",
+          "status": "new",
+          "region": "US"
+        },
+        {
+          "id": "johnson-johnson-data-scientist-titusville-fl-united-states",
+          "title": "Data Scientist",
+          "location": "Titusville, FL, United States",
+          "category": "data",
+          "date": "2024-06-17",
+          "url": "https://jobs.jnj.com/en/jobs/2406177546w/data-scientist/",
+          "status": "new",
+          "region": "US"
+        },
+        {
+          "id": "johnson-johnson-sr-scientist-bioinformatics-spring-house-pa-unit",
+          "title": "Sr. Scientist, Bioinformatics",
+          "location": "Spring House, PA, United States",
+          "category": "data",
+          "date": "2025-06-23",
+          "url": "https://jobs.jnj.com/en/jobs/2506232343w/sr-scientist-bioinformatics/",
+          "status": "new",
+          "region": "US"
+        }
+      ]
+    },
+    {
+      "name": "Merck",
+      "abbr": "MRK",
+      "website": "https://jobs.merck.com",
+      "jobs": []
+    },
+    {
+      "name": "Eli Lilly",
+      "abbr": "LLY",
+      "website": "https://careers.lilly.com",
+      "jobs": []
+    },
+    {
+      "name": "AbbVie",
+      "abbr": "ABBV",
+      "website": "https://careers.abbvie.com",
+      "jobs": [
+        {
+          "id": "abbvie-msl-sr-msl-facial-aesthetics-pa-nj-remote-philadelphia-pa",
+          "title": "MSL/Sr. MSL, Facial Aesthetics (PA & NJ) (Remote)",
+          "location": "Philadelphia, PA",
+          "category": "clinical",
+          "date": "2026-03-24",
+          "url": "https://careers.abbvie.com/en/job/msl-sr-msl-facial-aesthetics-pa-and-nj-remote-in-philadelphia-pa-jid-14699",
+          "status": "new",
+          "region": "US"
+        },
+        {
+          "id": "abbvie-oncology-care-gap-medical-science-liaison-msl-western-us-",
+          "title": "Oncology Care Gap Medical Science Liaison (MSL), Western US",
+          "location": "San Diego, CA",
+          "category": "clinical",
+          "date": "2026-03-24",
+          "url": "https://careers.abbvie.com/en/job/oncology-care-gap-medical-science-liaison-msl-western-us-in-san-diego-ca-jid-25313",
+          "status": "new",
+          "region": "US"
+        },
+        {
+          "id": "abbvie-msl-sr-msl-psychiatry-northern-california-remote-san-fran",
+          "title": "MSL/Sr. MSL, Psychiatry (Northern California) (Remote)",
+          "location": "San Francisco, CA",
+          "category": "clinical",
+          "date": "2026-03-24",
+          "url": "https://careers.abbvie.com/en/job/msl-sr-msl-psychiatry-northern-california-remote-in-san-francisco-ca-jid-9408",
+          "status": "new",
+          "region": "US"
+        },
+        {
+          "id": "abbvie-msl-sr-msl-migraine-ga-and-north-fl-atlanta-ga",
+          "title": "MSL/Sr. MSL, Migraine (GA and North FL)",
+          "location": "Atlanta, GA",
+          "category": "clinical",
+          "date": "2026-03-24",
+          "url": "https://careers.abbvie.com/en/job/msl-sr-msl-migraine-ga-and-north-fl-in-atlanta-ga-jid-23520",
+          "status": "new",
+          "region": "US"
+        },
+        {
+          "id": "abbvie-associate-manager-market-access-insights-mettawa-il",
+          "title": "Associate Manager, Market Access Insights",
+          "location": "Mettawa, IL",
+          "category": "commercial",
+          "date": "2026-03-24",
+          "url": "https://careers.abbvie.com/en/job/associate-manager-market-access-insights-in-mettawa-il-jid-4084",
+          "status": "new",
+          "region": "US"
+        },
+        {
+          "id": "abbvie-manager-senior-manager-market-access-insights-oncology-pa",
+          "title": "Manager/Senior Manager, Market Access Insights - Oncology Payer & Channel Analytics",
+          "location": "Mettawa, IL",
+          "category": "commercial",
+          "date": "2026-03-24",
+          "url": "https://careers.abbvie.com/en/job/manager-senior-manager-market-access-insights-oncology-payer-and-channel-analytics-in-mettawa-il-jid-5863",
+          "status": "new",
+          "region": "US"
+        },
+        {
+          "id": "abbvie-manager-marketing-florham-park-nj",
+          "title": "Manager, Marketing",
+          "location": "Florham Park, NJ",
+          "category": "commercial",
+          "date": "2026-03-24",
+          "url": "https://careers.abbvie.com/en/job/manager-marketing-in-florham-park-nj-jid-3773",
+          "status": "new",
+          "region": "US"
+        },
+        {
+          "id": "abbvie-data-scientist-remote-opportunities-north-chicago-il",
+          "title": "Data Scientist (Remote Opportunities)",
+          "location": "North Chicago, IL",
+          "category": "data",
+          "date": "2026-03-24",
+          "url": "https://careers.abbvie.com/en/job/data-scientist-remote-opportunities-in-north-chicago-il-jid-6007",
+          "status": "new",
+          "region": "US"
+        },
+        {
+          "id": "abbvie-senior-data-scientist-ai-solutions-south-san-francisco-ca",
+          "title": "Senior Data Scientist-AI Solutions",
+          "location": "South San Francisco, CA",
+          "category": "data",
+          "date": "2026-03-24",
+          "url": "https://careers.abbvie.com/en/job/senior-data-scientist-ai-solutions-in-south-san-francisco-ca-jid-25458",
+          "status": "new",
+          "region": "US"
+        },
+        {
+          "id": "abbvie-senior-scientist-i-ii-genomics-data-science-north-chicago",
+          "title": "Senior Scientist I/II, Genomics Data Science",
+          "location": "North Chicago, IL",
+          "category": "data",
+          "date": "2026-03-24",
+          "url": "https://careers.abbvie.com/en/job/senior-scientist-i-ii-genomics-data-science-in-north-chicago-il-jid-2296",
+          "status": "new",
+          "region": "US"
+        }
+      ]
+    },
+    {
+      "name": "Sanofi",
+      "abbr": "SNY",
+      "website": "https://jobs.sanofi.com",
+      "jobs": []
+    },
+    {
+      "name": "GSK",
+      "abbr": "GSK",
+      "website": "https://www.gsk.com/en-gb/careers",
+      "jobs": []
+    },
+    {
+      "name": "Bayer",
+      "abbr": "BAY",
+      "website": "https://career.bayer.com",
+      "jobs": [
+        {
+          "id": "bayer-senior-medical-science-liaison-cardiorenal-pennsylvania-ne",
+          "title": "Senior Medical Science Liaison Cardiorenal Pennsylvania New Jersey",
+          "location": "Philadelphia, Pennsylvania, United States",
+          "category": "clinical",
+          "date": "2026-03-24",
+          "url": "https://talent.bayer.com/careers/job/562949967233408",
+          "status": "new",
+          "region": "US"
+        },
+        {
+          "id": "bayer-senior-medical-science-liaison-cardiorenal-central-florida",
+          "title": "Senior Medical Science Liaison Cardiorenal Central Florida",
+          "location": "Residence Based, Florida, United States",
+          "category": "clinical",
+          "date": "2026-03-24",
+          "url": "https://talent.bayer.com/careers/job/562949968167635",
+          "status": "new",
+          "region": "US"
+        },
+        {
+          "id": "bayer-medical-science-liaison-stroke-thrombosis-north-tx-fort-wo",
+          "title": "Medical Science Liaison, Stroke/Thrombosis (North TX)",
+          "location": "Fort Worth, Texas, United States",
+          "category": "clinical",
+          "date": "2026-03-24",
+          "url": "https://talent.bayer.com/careers/job/562949964393199",
+          "status": "new",
+          "region": "US"
+        },
+        {
+          "id": "bayer-senior-medical-science-liaison-women-s-healthcare-new-york",
+          "title": "Senior Medical Science Liaison Women's Healthcare New York",
+          "location": "Residence Based, New York, United States",
+          "category": "clinical",
+          "date": "2026-03-24",
+          "url": "https://talent.bayer.com/careers/job/562949967883384",
+          "status": "new",
+          "region": "US"
+        },
+        {
+          "id": "bayer-senior-medical-science-liaison-women-s-healthcare-pittsbur",
+          "title": "Senior Medical Science Liaison-Women's Healthcare Pittsburgh/Cleveland",
+          "location": "Residence Based, Pennsylvania, United States",
+          "category": "clinical",
+          "date": "2026-03-24",
+          "url": "https://talent.bayer.com/careers/job/562949959695667",
+          "status": "new",
+          "region": "US"
+        },
+        {
+          "id": "bayer-senior-medical-science-liaison-cardiorenal-atlanta-georgia",
+          "title": "Senior Medical Science Liaison Cardiorenal (Atlanta, Georgia)",
+          "location": "Atlanta, Georgia, United States",
+          "category": "clinical",
+          "date": "2026-03-24",
+          "url": "https://talent.bayer.com/careers/job/562949975477457",
+          "status": "new",
+          "region": "US"
+        },
+        {
+          "id": "bayer-senior-medical-science-liaison-oncology-philadelphia-pa-ch",
+          "title": "Senior Medical Science Liaison, Oncology (Philadelphia, PA)",
+          "location": "Cherry Hill, New Jersey, United States",
+          "category": "clinical",
+          "date": "2026-03-24",
+          "url": "https://talent.bayer.com/careers/job/562949964825639",
+          "status": "new",
+          "region": "US"
+        },
+        {
+          "id": "bayer-senior-medical-science-liaison-stroke-thrombosis-nevada-ut",
+          "title": "Senior Medical Science Liaison Stroke/Thrombosis Nevada Utah Colorado",
+          "location": "Salt Lake City, Utah, United States",
+          "category": "clinical",
+          "date": "2026-03-24",
+          "url": "https://talent.bayer.com/careers/job/562949964393246",
+          "status": "new",
+          "region": "US"
+        },
+        {
+          "id": "bayer-senior-medical-science-liaison-stroke-thrombosis-northern-",
+          "title": "Senior Medical Science Liaison Stroke/Thrombosis (Northern Plains)",
+          "location": "Minneapolis, Minnesota, United States",
+          "category": "clinical",
+          "date": "2026-03-24",
+          "url": "https://talent.bayer.com/careers/job/562949975412462",
+          "status": "new",
+          "region": "US"
+        },
+        {
+          "id": "bayer-data-scientist-generative-ai-chesterfield-missouri-united-",
+          "title": "Data Scientist Generative AI",
+          "location": "Chesterfield, Missouri, United States",
+          "category": "data",
+          "date": "2026-03-24",
+          "url": "https://www.linkedin.com/jobs/view/data-scientist-generative-ai-at-bayer-3742927500",
+          "status": "new",
+          "region": "US"
+        }
+      ]
+    },
+    {
+      "name": "Boehringer Ingelheim",
+      "abbr": "BIE",
+      "website": "https://www.boehringer-ingelheim.com/careers",
+      "jobs": []
+    },
+    {
+      "name": "Bristol Myers Squibb",
+      "abbr": "BMS",
+      "website": "https://careers.bms.com",
+      "jobs": []
+    },
+    {
+      "name": "Amgen",
+      "abbr": "AMG",
+      "website": "https://careers.amgen.com",
+      "jobs": [
+        {
+          "id": "amgen-medical-science-liaison-hematology-oncology-al-ar-la-ms-tn",
+          "title": "Medical Science Liaison, Hematology Oncology- AL, AR, LA, MS, TN",
+          "location": "Memphis, TN, United States",
+          "category": "clinical",
+          "date": "2026-01-12",
+          "url": "https://careers.amgen.com/en/job/memphis/medical-science-liaison-hematology-oncology-al-ar-la-ms-tn/87/90525956624",
+          "status": "new",
+          "region": "US"
+        },
+        {
+          "id": "amgen-medical-science-liaison-hematology-oncology-co-ks-ne-nv-ok",
+          "title": "Medical Science Liaison, Hematology Oncology - CO, KS, NE, NV, OK, UT",
+          "location": "Denver, CO, United States",
+          "category": "clinical",
+          "date": "2026-01-12",
+          "url": "https://careers.amgen.com/en/job/denver/medical-science-liaison-hematology-oncology-co-ks-ne-nv-ok-ut/87/90525956640",
+          "status": "new",
+          "region": "US"
+        },
+        {
+          "id": "amgen-medical-science-liaison-nmosd-gmg-rare-disease-pittsburgh-",
+          "title": "Medical Science Liaison, NMOSD & gMG-Rare Disease - Pittsburgh/WV/Southern OH",
+          "location": "Pittsburgh, PA, United States",
+          "category": "clinical",
+          "date": "2026-03-16",
+          "url": "https://careers.amgen.com/en/job/pittsburgh/medical-science-liaison-nmosd-and-gmg-rare-disease-pittsburgh-wv-southern-oh/87/92849258912",
+          "status": "new",
+          "region": "US"
+        },
+        {
+          "id": "amgen-medical-science-liaison-nmosd-gmg-rare-disease-mn-nd-sd-ia",
+          "title": "Medical Science Liaison, NMOSD & gMG-Rare Disease - MN/ND/SD/IA/NE",
+          "location": "Minneapolis, MN, United States",
+          "category": "clinical",
+          "date": "2026-02-03",
+          "url": "https://careers.amgen.com/en/job/mineapolis/medical-science-liaison-nmosd-and-gmg-rare-disease-mn-nd-sd-ia-ne/87/91348916272",
+          "status": "new",
+          "region": "US"
+        },
+        {
+          "id": "amgen-senior-medical-science-liaison-obesity-northern-ca-central",
+          "title": "Senior Medical Science Liaison - Obesity - Northern CA, Central CA, NV",
+          "location": "San Francisco, CA, United States",
+          "category": "clinical",
+          "date": "2026-03-17",
+          "url": "https://careers.amgen.com/en/job/san-francisco/senior-medical-science-liaison-obesity-northern-ca-central-ca-nv/87/92879774752",
+          "status": "new",
+          "region": "US"
+        },
+        {
+          "id": "amgen-senior-principal-ai-ml-scientist-computational-imaging-uni",
+          "title": "Senior Principal AI/ML Scientist, Computational Imaging",
+          "location": "United States - Remote",
+          "category": "data",
+          "date": "2026-01-21",
+          "url": "https://careers.amgen.com/en/job/washington-d-c/senior-principal-ai-ml-scientist-computational-imaging/87/90831205536",
+          "status": "new",
+          "region": "US"
+        },
+        {
+          "id": "amgen-senior-data-scientist-thousand-oaks-ca-united-states",
+          "title": "Senior Data Scientist",
+          "location": "Thousand Oaks, CA, United States",
+          "category": "data",
+          "date": "2026-02-03",
+          "url": "https://careers.amgen.com/en/job/thousand-oaks/senior-data-scientist/87/91327344912",
+          "status": "new",
+          "region": "US"
+        },
+        {
+          "id": "amgen-data-scientist-new-albany-oh-united-states",
+          "title": "Data Scientist",
+          "location": "New Albany, OH, United States",
+          "category": "data",
+          "date": "2026-02-03",
+          "url": "https://careers.amgen.com/en/job/new-albany/data-scientist/87/91327344896",
+          "status": "new",
+          "region": "US"
+        },
+        {
+          "id": "amgen-grad-intern-cd-a-data-science-program-summer-2026-united-s",
+          "title": "Grad Intern - CD&A Data Science Program (Summer 2026)",
+          "location": "United States - Remote",
+          "category": "data",
+          "date": "2026-02-06",
+          "url": "https://careers.amgen.com/en/job/washington-d-c/grad-intern-cd-and-a-data-science-program-summer-2026/87/91448351616",
+          "status": "new",
+          "region": "US"
+        },
+        {
+          "id": "amgen-executive-director-marketing-excellence-thousand-oaks-ca-u",
+          "title": "Executive Director, Marketing Excellence",
+          "location": "Thousand Oaks, CA, United States",
+          "category": "commercial",
+          "date": "2026-02-18",
+          "url": "https://careers.amgen.com/en/job/thousand-oaks/executive-director-marketing-excellence/87/91881034480",
+          "status": "new",
+          "region": "US"
+        }
+      ]
+    },
+    {
+      "name": "Gilead Sciences",
+      "abbr": "GILD",
+      "website": "https://gilead.wd1.myworkdayjobs.com/gileadcareers",
+      "jobs": []
+    },
+    {
+      "name": "Takeda",
+      "abbr": "TAK",
+      "website": "https://www.takeda.com/careers",
+      "jobs": []
+    },
+    {
+      "name": "UCB",
+      "abbr": "UCB",
+      "website": "https://www.ucb.com/careers",
+      "jobs": []
+    }
+  ]
+}
