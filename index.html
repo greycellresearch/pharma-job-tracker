@@ -411,17 +411,21 @@ const openDrawers = new Set();
 
 // ── Boot ──────────────────────────────────────────────────────────────────
 async function boot() {
-  try { const r=await window.storage.get(JOBS_KEY);   if(r) jobData=JSON.parse(r.value); } catch{}
+  try {
+    const [jobsRes, archRes] = await Promise.all([
+      fetch('./data/jobs.json'),
+      fetch('./data/archive.json'),
+    ]);
+    jobData     = await jobsRes.json();
+    archiveData = await archRes.json();
+  } catch(e) {
+    jobData     = SAMPLE_JOBS;
+    archiveData = SAMPLE_ARCHIVE;
+  }
   try { const r=await window.storage.get(CONFIG_KEY); if(r) companies=JSON.parse(r.value); } catch{}
-  try { const r=await window.storage.get(ARCH_KEY);   if(r) archiveData=JSON.parse(r.value); } catch{}
-  if(!jobData)    { jobData=SAMPLE_JOBS; await saveJobs(); }
   if(!companies.length) { companies=[...DEFAULT_COMPANIES]; await saveCo(); }
-  if(!archiveData.length) { archiveData=SAMPLE_ARCHIVE; await saveArchive(); }
   render(); renderArchive(); renderModal();
 }
-async function saveJobs()    { try{await window.storage.set(JOBS_KEY,JSON.stringify(jobData));}catch{} }
-async function saveCo()      { try{await window.storage.set(CONFIG_KEY,JSON.stringify(companies));}catch{} }
-async function saveArchive() { try{await window.storage.set(ARCH_KEY,JSON.stringify(archiveData));}catch{} }
 
 // ── Helpers ───────────────────────────────────────────────────────────────
 function fmt(iso){ if(!iso)return'—'; return new Date(iso).toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'}); }
