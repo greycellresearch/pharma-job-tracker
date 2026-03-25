@@ -1,0 +1,690 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pharma Job Tracker</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@400;500&family=Sora:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --bg:#F5F3EE; --bg-card:#FDFCFA; --bg-card2:#EEECE6; --bg-overlay:rgba(20,18,12,0.55);
+  --text:#1A1915; --text-muted:#6B6960; --text-faint:#A8A79E;
+  --border:rgba(30,28,20,0.12); --border-strong:rgba(30,28,20,0.22);
+  --accent:#2D6A4F; --accent-light:#D8EDE4; --accent-text:#1B4332;
+  --new:#1A3C6B; --new-light:#D6E4F7; --new-text:#0D2444;
+  --removed:#7A2828; --removed-light:#F5DADA; --removed-text:#4A1515;
+  --amber:#92400E; --amber-light:#FEF3C7; --amber-text:#78350F;
+  --tag-clinical:#4A1942; --tag-clinical-bg:#F3E8F5;
+  --tag-commercial:#1A3C6B; --tag-commercial-bg:#D6E4F7;
+  --tag-data:#0F5132; --tag-data-bg:#D1FAE5;
+  --region-us:#1A3C6B; --region-us-bg:#D6E4F7;
+  --region-eu:#2D4A1A; --region-eu-bg:#D8EDE4;
+  --region-ca:#5C2D00; --region-ca-bg:#FDECD3;
+  --shadow:0 1px 3px rgba(0,0,0,0.07),0 4px 16px rgba(0,0,0,0.04);
+}
+body { font-family:'Sora',sans-serif; background:var(--bg); color:var(--text); min-height:100vh; }
+
+/* ── Header ── */
+header { background:var(--text); color:var(--bg); padding:1.8rem 2.5rem 0; }
+.header-top { display:flex; align-items:flex-start; justify-content:space-between; gap:1rem; flex-wrap:wrap; padding-bottom:1.4rem; }
+.header-title { font-family:'DM Serif Display',serif; font-size:2rem; letter-spacing:-0.5px; line-height:1.1; color:#F5F3EE; }
+.header-subtitle { font-size:0.76rem; color:rgba(245,243,238,0.45); margin-top:4px; font-family:'DM Mono',monospace; letter-spacing:0.5px; text-transform:uppercase; }
+.header-right { display:flex; align-items:flex-start; gap:1rem; flex-wrap:wrap; }
+.header-meta { text-align:right; font-size:0.73rem; font-family:'DM Mono',monospace; color:rgba(245,243,238,0.4); line-height:1.9; }
+.scan-badge { display:inline-block; background:var(--accent); color:#D8EDE4; padding:3px 10px; border-radius:3px; font-size:0.68rem; letter-spacing:0.5px; text-transform:uppercase; margin-bottom:3px; }
+.manage-btn { background:rgba(245,243,238,0.1); border:0.5px solid rgba(245,243,238,0.22); color:rgba(245,243,238,0.75); font-family:'Sora',sans-serif; font-size:0.75rem; padding:6px 14px; border-radius:5px; cursor:pointer; transition:all 0.15s; white-space:nowrap; }
+.manage-btn:hover { background:rgba(245,243,238,0.18); }
+
+/* ── Tab nav ── */
+.tab-nav { display:flex; gap:0; border-top:0.5px solid rgba(245,243,238,0.1); }
+.tab-btn { background:none; border:none; color:rgba(245,243,238,0.45); font-family:'Sora',sans-serif; font-size:0.8rem; padding:0.85rem 1.4rem; cursor:pointer; border-bottom:2px solid transparent; transition:all 0.15s; white-space:nowrap; }
+.tab-btn:hover { color:rgba(245,243,238,0.75); }
+.tab-btn.active { color:#F5F3EE; border-bottom-color:#F5F3EE; }
+.tab-btn .tab-count { font-family:'DM Mono',monospace; font-size:0.65rem; background:rgba(245,243,238,0.15); border-radius:10px; padding:1px 7px; margin-left:6px; }
+.tab-btn.active .tab-count { background:rgba(245,243,238,0.25); }
+
+/* ── Main ── */
+.main-wrap { max-width:1300px; margin:0 auto; padding:2rem 2rem 4rem; }
+.tab-panel { display:none; } .tab-panel.active { display:block; }
+
+/* ── Stats ── */
+.stats-row { display:grid; grid-template-columns:repeat(auto-fit,minmax(130px,1fr)); gap:10px; margin-bottom:1.8rem; }
+.stat-card { background:var(--bg-card); border:0.5px solid var(--border); border-radius:10px; padding:1rem 1.1rem; box-shadow:var(--shadow); }
+.stat-label { font-size:0.64rem; text-transform:uppercase; letter-spacing:0.8px; color:var(--text-faint); font-family:'DM Mono',monospace; margin-bottom:5px; }
+.stat-value { font-family:'DM Serif Display',serif; font-size:1.9rem; line-height:1; color:var(--text); }
+.stat-sub { font-size:0.66rem; color:var(--text-muted); margin-top:3px; }
+.hl-new .stat-value { color:var(--new); } .hl-rem .stat-value { color:var(--removed); } .hl-co .stat-value { color:var(--accent-text); }
+
+/* ── Toolbar ── */
+.toolbar { display:flex; align-items:center; gap:7px; margin-bottom:1.4rem; flex-wrap:wrap; }
+.toolbar-sep { width:1px; height:18px; background:var(--border-strong); margin:0 3px; }
+.toolbar-label { font-size:0.64rem; font-family:'DM Mono',monospace; text-transform:uppercase; letter-spacing:0.5px; color:var(--text-faint); }
+.fbtn { background:var(--bg-card); border:0.5px solid var(--border-strong); border-radius:5px; padding:5px 11px; font-size:0.73rem; font-family:'Sora',sans-serif; color:var(--text-muted); cursor:pointer; transition:all 0.15s; white-space:nowrap; }
+.fbtn:hover { background:var(--bg-card2); }
+.fbtn.active { background:var(--text); color:var(--bg); border-color:var(--text); }
+.fbtn.a-new { background:var(--new); color:#D6E4F7; border-color:var(--new); }
+.fbtn.a-rem { background:var(--removed); color:#F5DADA; border-color:var(--removed); }
+.fbtn.a-us { background:var(--region-us); color:var(--region-us-bg); border-color:var(--region-us); }
+.fbtn.a-eu { background:var(--region-eu); color:var(--region-eu-bg); border-color:var(--region-eu); }
+.fbtn.a-ca { background:var(--region-ca); color:var(--region-ca-bg); border-color:var(--region-ca); }
+.search-box { margin-left:auto; position:relative; }
+.search-box input { background:var(--bg-card); border:0.5px solid var(--border-strong); border-radius:5px; padding:5px 12px 5px 29px; font-size:0.73rem; font-family:'Sora',sans-serif; color:var(--text); width:190px; outline:none; }
+.search-icon { position:absolute; left:9px; top:50%; transform:translateY(-50%); width:12px; height:12px; pointer-events:none; color:var(--text-faint); }
+
+/* ── Change banner ── */
+.week-banner { background:var(--amber-light); border:0.5px solid rgba(146,64,14,0.2); border-radius:8px; padding:0.75rem 1.1rem; margin-bottom:1.4rem; display:flex; align-items:center; gap:10px; font-size:0.77rem; color:var(--amber-text); font-family:'DM Mono',monospace; }
+.pulse-dot { width:7px; height:7px; border-radius:50%; background:var(--amber); flex-shrink:0; animation:pulse 2s infinite; }
+@keyframes pulse { 0%,100%{opacity:1}50%{opacity:0.3} }
+
+/* ── Company sections ── */
+.company-section { margin-bottom:1rem; }
+.co-header { display:flex; align-items:center; gap:11px; padding:0.85rem 1.1rem; background:var(--bg-card); border:0.5px solid var(--border); border-radius:10px 10px 0 0; border-bottom:none; cursor:pointer; user-select:none; box-shadow:var(--shadow); transition:background 0.1s; }
+.co-header.collapsed { border-radius:10px; border-bottom:0.5px solid var(--border); }
+.co-header:hover { background:var(--bg-card2); }
+.co-logo { width:32px; height:32px; border-radius:6px; border:0.5px solid var(--border); display:flex; align-items:center; justify-content:center; font-family:'DM Mono',monospace; font-size:0.68rem; font-weight:500; background:var(--bg-card2); flex-shrink:0; color:var(--text-muted); }
+.co-name { font-size:0.9rem; font-weight:500; }
+.co-meta { font-size:0.66rem; color:var(--text-faint); font-family:'DM Mono',monospace; }
+.co-badges { margin-left:auto; display:flex; align-items:center; gap:5px; flex-wrap:wrap; justify-content:flex-end; }
+.badge { font-size:0.61rem; font-family:'DM Mono',monospace; border-radius:4px; padding:2px 6px; font-weight:500; }
+.badge-total { background:var(--bg-card2); color:var(--text-muted); }
+.badge-new { background:var(--new-light); color:var(--new-text); }
+.badge-arch { background:var(--removed-light); color:var(--removed-text); }
+.chevron { width:14px; height:14px; flex-shrink:0; margin-left:4px; transition:transform 0.2s; color:var(--text-faint); }
+.co-header:not(.collapsed) .chevron { transform:rotate(180deg); }
+.jobs-list { background:var(--bg-card); border:0.5px solid var(--border); border-top:none; border-radius:0 0 10px 10px; box-shadow:var(--shadow); overflow:hidden; }
+
+/* ── Job rows ── */
+.job-row { display:grid; grid-template-columns:2.2fr 1fr 85px 78px auto; gap:10px; align-items:center; padding:0.75rem 1.1rem; border-top:0.5px solid var(--border); transition:background 0.1s; cursor:pointer; }
+.job-row:first-child { border-top:none; }
+.job-row:hover { background:var(--bg-card2); }
+.job-row.is-new { border-left:3px solid var(--new); }
+.job-row.is-removed { border-left:3px solid var(--removed); opacity:0.6; }
+.jt { font-size:0.82rem; font-weight:500; line-height:1.35; color:var(--text); }
+.jl { font-size:0.68rem; color:var(--text-muted); font-family:'DM Mono',monospace; margin-top:2px; }
+.jd { font-size:0.66rem; color:var(--text-faint); font-family:'DM Mono',monospace; }
+.tag { font-size:0.58rem; font-family:'DM Mono',monospace; letter-spacing:0.3px; border-radius:3px; padding:2px 6px; text-transform:uppercase; font-weight:500; }
+.tag-clinical   { background:var(--tag-clinical-bg);   color:var(--tag-clinical); }
+.tag-commercial { background:var(--tag-commercial-bg); color:var(--tag-commercial); }
+.tag-data       { background:var(--tag-data-bg);       color:var(--tag-data); }
+.tag-new     { background:var(--new-light);      color:var(--new-text); }
+.tag-filled  { background:var(--removed-light);  color:var(--removed-text); }
+.tag-us  { background:var(--region-us-bg); color:var(--region-us); }
+.tag-eu  { background:var(--region-eu-bg); color:var(--region-eu); }
+.tag-ca  { background:var(--region-ca-bg); color:var(--region-ca); }
+.tag-other { background:var(--bg-card2); color:var(--text-muted); }
+.view-desc-btn { font-size:0.62rem; font-family:'DM Mono',monospace; color:var(--text-faint); background:var(--bg-card2); border:0.5px solid var(--border); border-radius:4px; padding:3px 8px; cursor:pointer; white-space:nowrap; transition:all 0.12s; }
+.view-desc-btn:hover { color:var(--text); border-color:var(--border-strong); }
+.no-match { padding:0.9rem 1.1rem; font-size:0.72rem; color:var(--text-faint); font-family:'DM Mono',monospace; text-align:center; }
+.no-results { text-align:center; padding:3rem; color:var(--text-faint); font-size:0.8rem; font-family:'DM Mono',monospace; }
+
+/* ── Archive tab ── */
+.archive-toolbar { display:flex; align-items:center; gap:10px; margin-bottom:1.4rem; flex-wrap:wrap; }
+.archive-search { position:relative; }
+.archive-search input { background:var(--bg-card); border:0.5px solid var(--border-strong); border-radius:5px; padding:5px 12px 5px 29px; font-size:0.73rem; font-family:'Sora',sans-serif; color:var(--text); width:220px; outline:none; }
+.quarter-group { margin-bottom:2rem; }
+.quarter-label { font-family:'DM Mono',monospace; font-size:0.68rem; text-transform:uppercase; letter-spacing:1px; color:var(--text-faint); padding-bottom:0.6rem; border-bottom:0.5px solid var(--border); margin-bottom:0.8rem; display:flex; align-items:center; gap:8px; }
+.quarter-count { background:var(--bg-card2); border-radius:10px; padding:1px 8px; color:var(--text-muted); }
+.arch-card { background:var(--bg-card); border:0.5px solid var(--border); border-radius:10px; margin-bottom:0.8rem; box-shadow:var(--shadow); overflow:hidden; }
+.arch-card-header { display:flex; align-items:center; gap:10px; padding:0.8rem 1.1rem; cursor:pointer; transition:background 0.1s; }
+.arch-card-header:hover { background:var(--bg-card2); }
+.arch-co-pill { font-size:0.62rem; font-family:'DM Mono',monospace; background:var(--bg-card2); border:0.5px solid var(--border); border-radius:4px; padding:2px 8px; color:var(--text-muted); flex-shrink:0; }
+.arch-title { font-size:0.84rem; font-weight:500; flex:1; }
+.arch-meta { font-size:0.66rem; color:var(--text-faint); font-family:'DM Mono',monospace; white-space:nowrap; }
+.arch-body { border-top:0.5px solid var(--border); padding:1.1rem 1.2rem; display:none; }
+.arch-body.open { display:block; }
+.arch-desc { font-size:0.8rem; line-height:1.7; color:var(--text-muted); white-space:pre-wrap; }
+.arch-desc-meta { display:flex; gap:1rem; flex-wrap:wrap; margin-bottom:0.9rem; padding-bottom:0.8rem; border-bottom:0.5px solid var(--border); }
+.arch-desc-meta-item { font-size:0.68rem; font-family:'DM Mono',monospace; color:var(--text-faint); }
+.arch-desc-meta-item strong { color:var(--text-muted); }
+.arch-link { font-size:0.72rem; color:var(--new); font-family:'DM Mono',monospace; text-decoration:none; }
+.arch-link:hover { text-decoration:underline; }
+.arch-no-desc { font-size:0.76rem; color:var(--text-faint); font-family:'DM Mono',monospace; font-style:italic; }
+.arch-empty { text-align:center; padding:3rem; color:var(--text-faint); font-size:0.8rem; font-family:'DM Mono',monospace; }
+
+/* ── Job description drawer (live jobs) ── */
+.desc-drawer { display:none; border-top:0.5px solid var(--border); padding:1rem 1.1rem; background:var(--bg-card2); }
+.desc-drawer.open { display:block; }
+.desc-drawer-text { font-size:0.78rem; line-height:1.7; color:var(--text-muted); white-space:pre-wrap; }
+.desc-drawer-actions { display:flex; align-items:center; gap:8px; margin-bottom:0.75rem; }
+.desc-source-link { font-size:0.69rem; color:var(--new); font-family:'DM Mono',monospace; text-decoration:none; }
+.desc-source-link:hover { text-decoration:underline; }
+.loading-text { font-size:0.73rem; color:var(--text-faint); font-family:'DM Mono',monospace; font-style:italic; }
+
+/* ── Manage modal ── */
+.modal-backdrop { position:fixed; inset:0; background:var(--bg-overlay); display:flex; align-items:center; justify-content:center; z-index:100; padding:1rem; }
+.modal { background:var(--bg-card); border:0.5px solid var(--border-strong); border-radius:14px; width:100%; max-width:680px; max-height:88vh; display:flex; flex-direction:column; box-shadow:0 8px 40px rgba(0,0,0,0.18); }
+.modal-header { padding:1.3rem 1.5rem 1rem; border-bottom:0.5px solid var(--border); display:flex; align-items:center; justify-content:space-between; flex-shrink:0; }
+.modal-title { font-family:'DM Serif Display',serif; font-size:1.25rem; }
+.modal-close { background:none; border:none; cursor:pointer; color:var(--text-muted); font-size:1.1rem; padding:4px; }
+.modal-close:hover { color:var(--text); }
+.modal-body { overflow-y:auto; padding:1.1rem 1.5rem; flex:1; }
+.modal-footer { padding:0.9rem 1.5rem; border-top:0.5px solid var(--border); flex-shrink:0; }
+.modal-note { font-size:0.68rem; color:var(--text-faint); font-family:'DM Mono',monospace; }
+.add-form { background:var(--bg-card2); border-radius:8px; padding:0.9rem 1rem; margin-bottom:1.3rem; display:grid; grid-template-columns:1fr 75px 1.3fr auto; gap:9px; align-items:end; }
+.add-form label { font-size:0.65rem; font-family:'DM Mono',monospace; text-transform:uppercase; letter-spacing:0.5px; color:var(--text-faint); display:block; margin-bottom:4px; }
+.add-form input { width:100%; background:var(--bg-card); border:0.5px solid var(--border-strong); border-radius:5px; padding:6px 8px; font-size:0.77rem; font-family:'Sora',sans-serif; color:var(--text); outline:none; }
+.btn-add { background:var(--text); color:var(--bg-card); border:none; border-radius:5px; padding:7px 14px; font-size:0.74rem; font-family:'Sora',sans-serif; cursor:pointer; white-space:nowrap; }
+.btn-add:hover { opacity:0.85; }
+.co-list-item { display:flex; align-items:center; gap:11px; padding:0.65rem 0; border-bottom:0.5px solid var(--border); }
+.co-list-item:last-child { border-bottom:none; }
+.toggle-sw { position:relative; width:34px; height:19px; flex-shrink:0; }
+.toggle-sw input { opacity:0; width:0; height:0; position:absolute; }
+.toggle-track { position:absolute; inset:0; border-radius:10px; background:var(--border-strong); transition:background 0.2s; cursor:pointer; }
+.toggle-track::after { content:''; position:absolute; width:13px; height:13px; border-radius:50%; background:white; top:3px; left:3px; transition:transform 0.2s; }
+.toggle-sw input:checked + .toggle-track { background:var(--accent); }
+.toggle-sw input:checked + .toggle-track::after { transform:translateX(15px); }
+.item-name { font-size:0.82rem; font-weight:500; }
+.item-abbr { font-size:0.66rem; font-family:'DM Mono',monospace; color:var(--text-faint); margin-left:5px; }
+.item-url  { font-size:0.66rem; color:var(--text-faint); font-family:'DM Mono',monospace; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; max-width:300px; }
+.btn-rem { background:none; border:none; cursor:pointer; color:var(--text-faint); font-size:0.82rem; padding:3px 6px; border-radius:4px; transition:all 0.13s; }
+.btn-rem:hover { background:var(--removed-light); color:var(--removed); }
+
+@media(max-width:760px){
+  .job-row{grid-template-columns:1fr 1fr;} .jd{display:none;}
+  header{padding:1.4rem 1.2rem 0;} .header-title{font-size:1.5rem;}
+  .main-wrap{padding:1rem 1rem 3rem;} .add-form{grid-template-columns:1fr 1fr;}
+}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-top">
+    <div>
+      <div class="header-title">Pharma Job Tracker</div>
+      <div class="header-subtitle">Clinical · Commercial · Data &amp; Tech &nbsp;|&nbsp; US · EU/UK · Canada</div>
+    </div>
+    <div class="header-right">
+      <button class="manage-btn" onclick="openModal()">&#9881;&nbsp; Manage Companies</button>
+      <div class="header-meta">
+        <div class="scan-badge" id="scan-status">Weekly scan active</div><br>
+        Last scan: <span id="last-scan">—</span><br>
+        Next scan: <span id="next-scan">—</span>
+      </div>
+    </div>
+  </div>
+  <div class="tab-nav">
+    <button class="tab-btn active" data-tab="live" onclick="switchTab('live',this)">
+      Current Roles <span class="tab-count" id="tc-live">—</span>
+    </button>
+    <button class="tab-btn" data-tab="archive" onclick="switchTab('archive',this)">
+      Archive &amp; Descriptions <span class="tab-count" id="tc-arch">—</span>
+    </button>
+  </div>
+</header>
+
+<div class="main-wrap">
+
+  <!-- ═══════════ LIVE TAB ═══════════ -->
+  <div class="tab-panel active" id="tab-live">
+
+    <div class="week-banner" id="change-banner" style="display:none;">
+      <div class="pulse-dot"></div>
+      <span id="banner-text"></span>
+    </div>
+
+    <div class="stats-row">
+      <div class="stat-card hl-co"><div class="stat-label">Companies Active</div><div class="stat-value" id="s-co">—</div><div class="stat-sub">tracked</div></div>
+      <div class="stat-card"><div class="stat-label">Open Roles</div><div class="stat-value" id="s-total">—</div><div class="stat-sub">rolling 12 weeks</div></div>
+      <div class="stat-card hl-new"><div class="stat-label">New This Week</div><div class="stat-value" id="s-new">—</div><div class="stat-sub">since last scan</div></div>
+      <div class="stat-card"><div class="stat-label">US</div><div class="stat-value" id="s-us" style="color:var(--region-us)">—</div><div class="stat-sub">open</div></div>
+      <div class="stat-card"><div class="stat-label">EU / UK</div><div class="stat-value" id="s-eu" style="color:var(--region-eu)">—</div><div class="stat-sub">open</div></div>
+      <div class="stat-card"><div class="stat-label">Canada</div><div class="stat-value" id="s-ca" style="color:var(--region-ca)">—</div><div class="stat-sub">open</div></div>
+    </div>
+
+    <div class="toolbar">
+      <span class="toolbar-label">Role:</span>
+      <button class="fbtn active" data-filter="all">All</button>
+      <button class="fbtn" data-filter="new">New</button>
+      <button class="fbtn" data-filter="clinical">Clinical</button>
+      <button class="fbtn" data-filter="commercial">Commercial</button>
+      <button class="fbtn" data-filter="data">Data / Tech</button>
+      <div class="toolbar-sep"></div>
+      <span class="toolbar-label">Region:</span>
+      <button class="fbtn active" data-region="all">All</button>
+      <button class="fbtn" data-region="US">US</button>
+      <button class="fbtn" data-region="EU">EU / UK</button>
+      <button class="fbtn" data-region="Canada">Canada</button>
+      <div class="search-box">
+        <svg class="search-icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="6.5" cy="6.5" r="4.5"/><path d="M10.5 10.5l3 3"/></svg>
+        <input type="text" id="live-search" placeholder="Search roles…" />
+      </div>
+    </div>
+
+    <div id="live-feed"></div>
+  </div>
+
+  <!-- ═══════════ ARCHIVE TAB ═══════════ -->
+  <div class="tab-panel" id="tab-archive">
+
+    <div class="archive-toolbar">
+      <span class="toolbar-label">Company:</span>
+      <select id="arch-co-filter" class="fbtn" style="padding:5px 10px;">
+        <option value="all">All companies</option>
+      </select>
+      <div class="toolbar-sep"></div>
+      <span class="toolbar-label">Category:</span>
+      <button class="fbtn active" data-arch-filter="all">All</button>
+      <button class="fbtn" data-arch-filter="clinical">Clinical</button>
+      <button class="fbtn" data-arch-filter="commercial">Commercial</button>
+      <button class="fbtn" data-arch-filter="data">Data / Tech</button>
+      <div class="archive-search" style="margin-left:auto;">
+        <svg class="search-icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="6.5" cy="6.5" r="4.5"/><path d="M10.5 10.5l3 3"/></svg>
+        <input type="text" id="arch-search" placeholder="Search archive…" style="width:210px;" />
+      </div>
+    </div>
+
+    <div id="arch-feed"></div>
+  </div>
+
+</div>
+
+<!-- Manage modal -->
+<div class="modal-backdrop" id="modal" style="display:none;" onclick="maybeClose(event)">
+  <div class="modal" onclick="event.stopPropagation()">
+    <div class="modal-header">
+      <div class="modal-title">Manage Companies</div>
+      <button class="modal-close" onclick="closeModal()">&#10005;</button>
+    </div>
+    <div class="modal-body">
+      <div class="add-form">
+        <div><label>Company Name</label><input id="f-name" placeholder="e.g. Regeneron" /></div>
+        <div><label>Abbr</label><input id="f-abbr" placeholder="REGN" maxlength="6" /></div>
+        <div><label>Careers Page URL</label><input id="f-url" placeholder="https://careers.regeneron.com" /></div>
+        <div><button class="btn-add" onclick="addCompany()">+ Add</button></div>
+      </div>
+      <div id="co-list"></div>
+    </div>
+    <div class="modal-footer">
+      <span class="modal-note">Toggle off to pause tracking without deleting. New companies are picked up on the next scheduled scan.</span>
+    </div>
+  </div>
+</div>
+
+<script>
+const JOBS_KEY   = 'pharma_jobs_v4';
+const CONFIG_KEY = 'pharma_config_v3';
+const ARCH_KEY   = 'pharma_archive_v4';
+
+// ── Region detection ──────────────────────────────────────────────────────
+const EU_KW = ['germany','france','italy','spain','netherlands','belgium','sweden','switzerland','united kingdom','uk','england','scotland','wales','london','paris','berlin','munich','frankfurt','amsterdam','brussels','madrid','barcelona','milan','rome','stockholm','zurich','geneva','cambridge, uk','oxford','stevenage','slough'];
+const CA_KW = ['canada','toronto','montreal','vancouver','ottawa','calgary','edmonton'];
+function detectRegion(loc) {
+  if (!loc) return 'other';
+  const l = loc.toLowerCase();
+  if (CA_KW.some(k=>l.includes(k))) return 'Canada';
+  if (EU_KW.some(k=>l.includes(k))) return 'EU';
+  if (/,\s*[A-Z]{2}$/.test(loc.trim())) return 'US';
+  if (['remote','us','usa','united states'].some(k=>l.includes(k))) return 'US';
+  return 'other';
+}
+const RTAG = {US:'tag-us',EU:'tag-eu',Canada:'tag-ca',other:'tag-other'};
+const RLBL = {US:'US',EU:'EU/UK',Canada:'CA',other:'Intl'};
+
+// ── Quarter helpers ───────────────────────────────────────────────────────
+function dateToQuarter(iso) {
+  const d = new Date(iso);
+  return `${d.getFullYear()} Q${Math.floor(d.getMonth()/3)+1}`;
+}
+function quarterSortKey(q) {
+  const [yr,qu] = q.split(' Q');
+  return parseInt(yr)*10+parseInt(qu);
+}
+
+// ── Default data ──────────────────────────────────────────────────────────
+const DEFAULT_COMPANIES = [
+  {name:'Pfizer',abbr:'PFE',active:true,careerUrl:'https://www.pfizer.com/about/careers'},
+  {name:'Roche',abbr:'ROG',active:true,careerUrl:'https://www.roche.com/careers'},
+  {name:'Novartis',abbr:'NVS',active:true,careerUrl:'https://www.novartis.com/careers'},
+  {name:'AstraZeneca',abbr:'AZN',active:true,careerUrl:'https://careers.astrazeneca.com'},
+  {name:'Johnson & Johnson',abbr:'J&J',active:true,careerUrl:'https://jobs.jnj.com'},
+  {name:'Merck',abbr:'MRK',active:true,careerUrl:'https://jobs.merck.com'},
+  {name:'Eli Lilly',abbr:'LLY',active:true,careerUrl:'https://careers.lilly.com'},
+  {name:'AbbVie',abbr:'ABBV',active:true,careerUrl:'https://careers.abbvie.com'},
+  {name:'Sanofi',abbr:'SNY',active:true,careerUrl:'https://jobs.sanofi.com'},
+  {name:'GSK',abbr:'GSK',active:true,careerUrl:'https://www.gsk.com/en-gb/careers'},
+  {name:'Bayer',abbr:'BAY',active:true,careerUrl:'https://career.bayer.com'},
+  {name:'Boehringer Ingelheim',abbr:'BIE',active:true,careerUrl:'https://www.boehringer-ingelheim.com/careers'},
+  {name:'Bristol Myers Squibb',abbr:'BMS',active:true,careerUrl:'https://careers.bms.com'},
+  {name:'Amgen',abbr:'AMG',active:true,careerUrl:'https://careers.amgen.com'},
+  {name:'Gilead Sciences',abbr:'GILD',active:true,careerUrl:'https://gilead.wd1.myworkdayjobs.com/gileadcareers'},
+  {name:'Takeda',abbr:'TAK',active:true,careerUrl:'https://www.takeda.com/careers'},
+  {name:'UCB',abbr:'UCB',active:true,careerUrl:'https://www.ucb.com/careers'},
+  {name:'Ipsen',abbr:'IPS',active:false,careerUrl:'https://www.ipsen.com/careers'},
+  {name:'Servier',abbr:'SRV',active:false,careerUrl:'https://www.servier.com/en/careers'},
+];
+
+const SAMPLE_DESC = `About the role\nThis position plays a key part in the company's medical affairs strategy, serving as a scientific liaison between internal teams and external stakeholders including KOLs, academic institutions, and healthcare systems.\n\nKey responsibilities\n• Build and maintain peer-level relationships with key opinion leaders\n• Deliver high-quality scientific exchange consistent with label and published evidence\n• Support medical education programs and advisory boards\n• Provide clinical and scientific insights to cross-functional teams\n• Participate in congress coverage and scientific symposia\n\nRequired qualifications\n• Advanced degree (PharmD, MD, PhD) in a relevant scientific discipline\n• 3+ years of MSL or medical affairs experience\n• Strong scientific communication and presentation skills\n• Ability to travel up to 60%\n\nPreferred qualifications\n• Experience in the relevant therapeutic area\n• Established KOL relationships\n• Familiarity with evidence-based medicine and clinical trial design`;
+
+const now = new Date();
+const SAMPLE_JOBS = {
+  lastScan: new Date(Date.now()-2*24*60*60*1000).toISOString(),
+  companies:[
+    {name:'Pfizer',jobs:[
+      {id:'pfe-1',title:'Senior Medical Affairs Manager, Oncology',location:'New York, NY',category:'clinical',date:new Date(now-14*86400000).toISOString().slice(0,10),status:'new',url:'#'},
+      {id:'pfe-2',title:'Commercial Analytics Lead — Rare Disease',location:'Remote',category:'commercial',date:new Date(now-30*86400000).toISOString().slice(0,10),status:'open',url:'#'},
+      {id:'pfe-3',title:'Data Science Director, Translational Medicine',location:'Cambridge, MA',category:'data',date:new Date(now-7*86400000).toISOString().slice(0,10),status:'new',url:'#'},
+    ]},
+    {name:'Roche',jobs:[
+      {id:'roc-1',title:'Medical Science Liaison, Neuroscience',location:'South San Francisco, CA',category:'clinical',date:new Date(now-10*86400000).toISOString().slice(0,10),status:'new',url:'#'},
+      {id:'roc-2',title:'Market Access & Pricing Analyst',location:'Basel, Switzerland',category:'commercial',date:new Date(now-45*86400000).toISOString().slice(0,10),status:'open',url:'#'},
+      {id:'roc-3',title:'Machine Learning Engineer, Drug Discovery',location:'London, UK',category:'data',date:new Date(now-12*86400000).toISOString().slice(0,10),status:'new',url:'#'},
+    ]},
+    {name:'Novartis',jobs:[
+      {id:'nvs-1',title:'Clinical Development Director, Cardiology',location:'Munich, Germany',category:'clinical',date:new Date(now-55*86400000).toISOString().slice(0,10),status:'open',url:'#'},
+      {id:'nvs-2',title:'Head of Commercial Operations, Immunology',location:'Toronto, Canada',category:'commercial',date:new Date(now-5*86400000).toISOString().slice(0,10),status:'new',url:'#'},
+      {id:'nvs-3',title:'Data Engineer, Clinical Informatics',location:'Amsterdam, Netherlands',category:'data',date:new Date(now-40*86400000).toISOString().slice(0,10),status:'open',url:'#'},
+    ]},
+    {name:'AstraZeneca',jobs:[
+      {id:'azn-1',title:'Regulatory Affairs Manager, Oncology',location:'Gaithersburg, MD',category:'clinical',date:new Date(now-20*86400000).toISOString().slice(0,10),status:'open',url:'#'},
+      {id:'azn-2',title:'Digital Health & Data Science Lead',location:'Cambridge, UK',category:'data',date:new Date(now-3*86400000).toISOString().slice(0,10),status:'new',url:'#'},
+      {id:'azn-3',title:'Senior Sales Representative, Respiratory',location:'Paris, France',category:'commercial',date:new Date(now-35*86400000).toISOString().slice(0,10),status:'open',url:'#'},
+    ]},
+    {name:'GSK',jobs:[
+      {id:'gsk-1',title:'Medical Affairs Director, Vaccines',location:'London, UK',category:'clinical',date:new Date(now-8*86400000).toISOString().slice(0,10),status:'new',url:'#'},
+      {id:'gsk-2',title:'Commercial Director, Oncology EMEA',location:'Madrid, Spain',category:'commercial',date:new Date(now-50*86400000).toISOString().slice(0,10),status:'open',url:'#'},
+    ]},
+    {name:'Eli Lilly',jobs:[
+      {id:'lly-1',title:'Medical Science Liaison, Metabolic Disease',location:'Indianapolis, IN',category:'clinical',date:new Date(now-60*86400000).toISOString().slice(0,10),status:'open',url:'#'},
+      {id:'lly-2',title:'Brand Manager, GLP-1 Portfolio',location:'Montreal, Canada',category:'commercial',date:new Date(now-6*86400000).toISOString().slice(0,10),status:'new',url:'#'},
+    ]},
+  ]
+};
+
+// Sample archive — pre-filled with plausible past roles
+const TWELVE_WEEKS_AGO = new Date(now - 84*86400000);
+const SAMPLE_ARCHIVE = [
+  {id:'pfe-old-1',company:'Pfizer',title:'Regional Sales Manager, Vaccines',location:'Chicago, IL',category:'commercial',postedDate:new Date(now-120*86400000).toISOString().slice(0,10),removedDate:new Date(now-90*86400000).toISOString().slice(0,10),url:'#',description:SAMPLE_DESC.replace('medical affairs','commercial sales')},
+  {id:'nvs-old-1',company:'Novartis',title:'Senior MSL, Hematology',location:'Philadelphia, PA',category:'clinical',postedDate:new Date(now-150*86400000).toISOString().slice(0,10),removedDate:new Date(now-110*86400000).toISOString().slice(0,10),url:'#',description:SAMPLE_DESC},
+  {id:'lly-old-1',company:'Eli Lilly',title:'VP Commercial Excellence',location:'Indianapolis, IN',category:'commercial',postedDate:new Date(now-200*86400000).toISOString().slice(0,10),removedDate:new Date(now-160*86400000).toISOString().slice(0,10),url:'#',description:SAMPLE_DESC.replace('medical affairs','commercial excellence')},
+  {id:'roc-old-1',company:'Roche',title:'Principal Data Scientist, Real World Evidence',location:'Basel, Switzerland',category:'data',postedDate:new Date(now-95*86400000).toISOString().slice(0,10),removedDate:new Date(now-87*86400000).toISOString().slice(0,10),url:'#',description:SAMPLE_DESC.replace('medical affairs','data science and real world evidence')},
+  {id:'azn-old-1',company:'AstraZeneca',title:'Medical Science Liaison, Cardiovascular',location:'London, UK',category:'clinical',postedDate:new Date(now-180*86400000).toISOString().slice(0,10),removedDate:new Date(now-140*86400000).toISOString().slice(0,10),url:'#',description:SAMPLE_DESC},
+];
+
+// ── State ─────────────────────────────────────────────────────────────────
+let jobData=null, companies=[], archiveData=[];
+let fRole='all', fRegion='all', fSearch='';
+let archFilter='all', archSearch='', archCo='all';
+const openDrawers = new Set();
+
+// ── Boot ──────────────────────────────────────────────────────────────────
+async function boot() {
+  try {
+    const [jobsRes, archRes] = await Promise.all([
+      fetch('./data/jobs.json'),
+      fetch('./data/archive.json'),
+    ]);
+    jobData     = await jobsRes.json();
+    archiveData = await archRes.json();
+  } catch(e) {
+    jobData     = SAMPLE_JOBS;
+    archiveData = SAMPLE_ARCHIVE;
+  }
+  try { const r=await window.storage.get(CONFIG_KEY); if(r) companies=JSON.parse(r.value); } catch{}
+  if(!companies.length) { companies=[...DEFAULT_COMPANIES]; }
+  render(); renderArchive(); renderModal();
+}
+async function saveJobs()    { try{await window.storage.set(JOBS_KEY,JSON.stringify(jobData));}catch{} }
+async function saveCo()      { try{await window.storage.set(CONFIG_KEY,JSON.stringify(companies));}catch{} }
+async function saveArchive() { try{await window.storage.set(ARCH_KEY,JSON.stringify(archiveData));}catch{} }
+
+// ── Helpers ───────────────────────────────────────────────────────────────
+function fmt(iso){ if(!iso)return'—'; return new Date(iso).toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'}); }
+function nextMonday(iso){ const d=new Date(iso),diff=((1-d.getDay())+7)%7||7; d.setDate(d.getDate()+diff); return d; }
+function catLabel(c){ return c==='clinical'?'Clinical':c==='commercial'?'Commercial':c==='data'?'Data/Tech':c; }
+function isWithin12Weeks(dateStr){ return new Date(dateStr)>=new Date(now-84*86400000); }
+
+function liveMatches(job) {
+  if(!isWithin12Weeks(job.date)) return false;
+  if(job.status==='removed') return false;
+  if(fRole==='new'&&job.status!=='new') return false;
+  if(fRole==='clinical'&&job.category!=='clinical') return false;
+  if(fRole==='commercial'&&job.category!=='commercial') return false;
+  if(fRole==='data'&&job.category!=='data') return false;
+  const reg=detectRegion(job.location);
+  if(fRegion!=='all'&&reg!==fRegion) return false;
+  if(fSearch){ const q=fSearch.toLowerCase(); if(!job.title.toLowerCase().includes(q)&&!job.location.toLowerCase().includes(q)) return false; }
+  return true;
+}
+
+// ── Live tab render ───────────────────────────────────────────────────────
+function render() {
+  if(!jobData) return;
+  document.getElementById('last-scan').textContent=fmt(jobData.lastScan);
+  document.getElementById('next-scan').textContent=fmt(nextMonday(jobData.lastScan).toISOString());
+  const allJobs=jobData.companies.flatMap(c=>c.jobs);
+  const liveJobs=allJobs.filter(j=>j.status!=='removed'&&isWithin12Weeks(j.date));
+  document.getElementById('s-co').textContent=companies.filter(c=>c.active).length;
+  document.getElementById('s-total').textContent=liveJobs.length;
+  document.getElementById('s-new').textContent=liveJobs.filter(j=>j.status==='new').length;
+  document.getElementById('s-us').textContent=liveJobs.filter(j=>detectRegion(j.location)==='US').length;
+  document.getElementById('s-eu').textContent=liveJobs.filter(j=>detectRegion(j.location)==='EU').length;
+  document.getElementById('s-ca').textContent=liveJobs.filter(j=>detectRegion(j.location)==='Canada').length;
+  document.getElementById('tc-live').textContent=liveJobs.length;
+  document.getElementById('tc-arch').textContent=archiveData.length;
+
+  const nNew=liveJobs.filter(j=>j.status==='new').length;
+  if(nNew>0){ document.getElementById('change-banner').style.display='flex'; document.getElementById('banner-text').textContent=`${nNew} new role${nNew!==1?'s':''} posted since the last scan on ${fmt(jobData.lastScan)}.`; }
+
+  let html=''; let any=false;
+  jobData.companies.forEach(co=>{
+    const cfg=companies.find(c=>c.name===co.name);
+    if(cfg&&!cfg.active) return;
+    const vis=co.jobs.filter(liveMatches);
+    if(!vis.length) return;
+    any=true;
+    const nC=vis.filter(j=>j.status==='new').length;
+    const oC=vis.length;
+    html+=`<div class="company-section">
+      <div class="co-header" onclick="toggleCo(this)">
+        <div class="co-logo">${co.name.substring(0,3).toUpperCase()}</div>
+        <div><div class="co-name">${co.name}</div><div class="co-meta">${oC} role${oC!==1?'s':''} in rolling window</div></div>
+        <div class="co-badges">
+          ${nC>0?`<span class="badge badge-new">+${nC} new</span>`:''}
+          <span class="badge badge-total">${oC} open</span>
+        </div>
+        <svg class="chevron" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 6l4 4 4-4"/></svg>
+      </div>
+      <div class="jobs-list" id="jl-${co.name.replace(/\W/g,'_')}">
+        ${vis.map(job=>{
+          const reg=detectRegion(job.location);
+          const hasArch=archiveData.some(a=>a.id===job.id&&a.description);
+          return `<div>
+            <div class="job-row is-${job.status==='new'?'new':'open'}" onclick="toggleDrawer('${job.id}',this)">
+              <div><div class="jt">${job.title}</div><div class="jl">${job.location}</div></div>
+              <div class="jd">Posted ${fmt(job.date)}</div>
+              <div><span class="tag tag-${job.category}">${catLabel(job.category)}</span></div>
+              <div><span class="tag ${RTAG[reg]}">${RLBL[reg]}</span></div>
+              <div style="display:flex;gap:5px;align-items:center;flex-wrap:wrap;">
+                ${job.status==='new'?'<span class="tag tag-new">New</span>':''}
+                <span class="view-desc-btn">&#9660; Description</span>
+              </div>
+            </div>
+            <div class="desc-drawer" id="drawer-${job.id}">
+              <div class="desc-drawer-actions">
+                ${job.url&&job.url!=='#'?`<a class="desc-source-link" href="${job.url}" target="_blank">&#8599; View original posting</a>`:''}
+              </div>
+              <div class="desc-drawer-text" id="desc-${job.id}">
+                <span class="loading-text">Click row to load description…</span>
+              </div>
+            </div>
+          </div>`;
+        }).join('')}
+      </div>
+    </div>`;
+  });
+  document.getElementById('live-feed').innerHTML=any?html:'<div class="no-results">No roles match current filters.</div>';
+}
+
+function toggleCo(h){ h.classList.toggle('collapsed'); h.nextElementSibling.style.display=h.classList.contains('collapsed')?'none':''; }
+
+function toggleDrawer(jobId, rowEl) {
+  const drawer=document.getElementById(`drawer-${jobId}`);
+  const descEl=document.getElementById(`desc-${jobId}`);
+  const btnEl=rowEl.querySelector('.view-desc-btn');
+  const isOpen=drawer.classList.contains('open');
+  if(isOpen){ drawer.classList.remove('open'); if(btnEl){btnEl.textContent='▼ Description';} return; }
+  drawer.classList.add('open');
+  if(btnEl){btnEl.textContent='▲ Description';}
+  if(openDrawers.has(jobId)) return; // already loaded
+  openDrawers.add(jobId);
+  // Try to find description in archive or job data
+  const archEntry=archiveData.find(a=>a.id===jobId);
+  const jobEntry=jobData.companies.flatMap(c=>c.jobs).find(j=>j.id===jobId);
+  if(archEntry&&archEntry.description){
+    descEl.textContent=archEntry.description; return;
+  }
+  if(jobEntry&&jobEntry.description){
+    descEl.textContent=jobEntry.description; return;
+  }
+  // No description stored yet — show placeholder (scanner will fetch on next removal)
+  descEl.innerHTML=`<span style="color:var(--text-faint);font-style:italic;font-family:'DM Mono',monospace;font-size:0.72rem;">Full description will be fetched and stored when this role is removed/filled during the next scan. ${jobEntry&&jobEntry.url&&jobEntry.url!=='#'?`<a class="arch-link" href="${jobEntry.url}" target="_blank">View live posting ↗</a>`:''}</span>`;
+}
+
+// ── Archive tab render ────────────────────────────────────────────────────
+function renderArchive() {
+  document.getElementById('tc-arch').textContent=archiveData.length;
+
+  // Rebuild company filter dropdown
+  const coSel=document.getElementById('arch-co-filter');
+  const prev=coSel.value;
+  const coNames=[...new Set(archiveData.map(a=>a.company))].sort();
+  coSel.innerHTML='<option value="all">All companies</option>'+coNames.map(n=>`<option value="${n}"${n===prev?' selected':''}>${n}</option>`).join('');
+
+  // Filter archive
+  let items=archiveData.filter(a=>{
+    if(archCo!=='all'&&a.company!==archCo) return false;
+    if(archFilter!=='all'&&a.category!==archFilter) return false;
+    if(archSearch){
+      const q=archSearch.toLowerCase();
+      if(!a.title.toLowerCase().includes(q)&&!a.company.toLowerCase().includes(q)&&!(a.description||'').toLowerCase().includes(q)) return false;
+    }
+    return true;
+  });
+
+  if(!items.length){ document.getElementById('arch-feed').innerHTML='<div class="arch-empty">No archived roles match your filters.</div>'; return; }
+
+  // Group by quarter of removal date
+  const groups={};
+  items.forEach(a=>{
+    const q=dateToQuarter(a.removedDate||a.postedDate);
+    if(!groups[q]) groups[q]=[];
+    groups[q].push(a);
+  });
+
+  const sortedQ=Object.keys(groups).sort((a,b)=>quarterSortKey(b)-quarterSortKey(a));
+  let html='';
+  sortedQ.forEach(q=>{
+    const roleList=groups[q];
+    html+=`<div class="quarter-group">
+      <div class="quarter-label">${q} <span class="quarter-count">${roleList.length} role${roleList.length!==1?'s':''}</span></div>
+      ${roleList.map(a=>{
+        const reg=detectRegion(a.location);
+        return `<div class="arch-card">
+          <div class="arch-card-header" onclick="toggleArchCard(this)">
+            <span class="arch-co-pill">${a.company}</span>
+            <div class="arch-title">${a.title}</div>
+            <div style="display:flex;gap:5px;align-items:center;margin-left:auto;flex-shrink:0;">
+              <span class="tag tag-${a.category}">${catLabel(a.category)}</span>
+              <span class="tag ${RTAG[reg]}">${RLBL[reg]}</span>
+            </div>
+            <div class="arch-meta" style="margin-left:12px;">Filled ${fmt(a.removedDate)}</div>
+            <svg style="width:14px;height:14px;flex-shrink:0;margin-left:8px;transition:transform 0.2s;color:var(--text-faint);" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 6l4 4 4-4"/></svg>
+          </div>
+          <div class="arch-body">
+            <div class="arch-desc-meta">
+              <span class="arch-desc-meta-item"><strong>Location</strong> ${a.location}</span>
+              <span class="arch-desc-meta-item"><strong>Posted</strong> ${fmt(a.postedDate)}</span>
+              <span class="arch-desc-meta-item"><strong>Filled</strong> ${fmt(a.removedDate)}</span>
+              ${a.url&&a.url!=='#'?`<a class="arch-link" href="${a.url}" target="_blank">Original posting ↗</a>`:''}
+            </div>
+            ${a.description
+              ? `<div class="arch-desc">${a.description}</div>`
+              : `<div class="arch-no-desc">Description not available for this role.</div>`}
+          </div>
+        </div>`;
+      }).join('')}
+    </div>`;
+  });
+  document.getElementById('arch-feed').innerHTML=html;
+}
+
+function toggleArchCard(header){
+  const body=header.nextElementSibling;
+  const chev=header.querySelector('svg');
+  const isOpen=body.classList.contains('open');
+  body.classList.toggle('open');
+  if(chev) chev.style.transform=isOpen?'':'rotate(180deg)';
+}
+
+// ── Tab switching ─────────────────────────────────────────────────────────
+function switchTab(tab, btn) {
+  document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
+  document.querySelectorAll('.tab-panel').forEach(p=>p.classList.remove('active'));
+  btn.classList.add('active');
+  document.getElementById(`tab-${tab}`).classList.add('active');
+  if(tab==='archive') renderArchive();
+}
+
+// ── Filter wiring ─────────────────────────────────────────────────────────
+document.querySelectorAll('[data-filter]').forEach(btn=>{
+  btn.addEventListener('click',function(){
+    document.querySelectorAll('[data-filter]').forEach(b=>b.classList.remove('active','a-new','a-rem'));
+    fRole=this.dataset.filter;
+    this.classList.add(fRole==='new'?'a-new':fRole==='removed'?'a-rem':'active');
+    render();
+  });
+});
+document.querySelectorAll('[data-region]').forEach(btn=>{
+  btn.addEventListener('click',function(){
+    document.querySelectorAll('[data-region]').forEach(b=>b.classList.remove('active','a-us','a-eu','a-ca'));
+    fRegion=this.dataset.region;
+    this.classList.add(fRegion==='US'?'a-us':fRegion==='EU'?'a-eu':fRegion==='Canada'?'a-ca':'active');
+    render();
+  });
+});
+document.querySelectorAll('[data-arch-filter]').forEach(btn=>{
+  btn.addEventListener('click',function(){
+    document.querySelectorAll('[data-arch-filter]').forEach(b=>b.classList.remove('active'));
+    this.classList.add('active');
+    archFilter=this.dataset.archFilter;
+    renderArchive();
+  });
+});
+document.getElementById('live-search').addEventListener('input',function(){ fSearch=this.value.trim(); render(); });
+document.getElementById('arch-search').addEventListener('input',function(){ archSearch=this.value.trim(); renderArchive(); });
+document.getElementById('arch-co-filter').addEventListener('change',function(){ archCo=this.value; renderArchive(); });
+
+// ── Manage modal ──────────────────────────────────────────────────────────
+function renderModal(){
+  document.getElementById('co-list').innerHTML=companies.map((c,i)=>`
+    <div class="co-list-item">
+      <label class="toggle-sw"><input type="checkbox" ${c.active?'checked':''} onchange="toggleActive(${i},this.checked)"><div class="toggle-track"></div></label>
+      <div style="flex:1;min-width:0;">
+        <div class="item-name">${c.name}<span class="item-abbr">${c.abbr}</span></div>
+        <div class="item-url">${c.careerUrl}</div>
+      </div>
+      <button class="btn-rem" onclick="removeCo(${i})">&#10005;</button>
+    </div>`).join('');
+}
+function openModal(){ document.getElementById('modal').style.display='flex'; }
+function closeModal(){ document.getElementById('modal').style.display='none'; }
+function maybeClose(e){ if(e.target===document.getElementById('modal')) closeModal(); }
+async function toggleActive(i,val){ companies[i].active=val; await saveCo(); render(); }
+async function removeCo(i){ if(!confirm(`Remove ${companies[i].name}?`))return; companies.splice(i,1); await saveCo(); renderModal(); render(); }
+async function addCompany(){
+  const name=document.getElementById('f-name').value.trim();
+  const abbr=document.getElementById('f-abbr').value.trim().toUpperCase();
+  const url=document.getElementById('f-url').value.trim();
+  if(!name||!abbr){alert('Name and abbreviation required.');return;}
+  companies.push({name,abbr,active:true,careerUrl:url||`https://www.google.com/search?q=${encodeURIComponent(name+' pharma careers')}`});
+  await saveCo(); document.getElementById('f-name').value=''; document.getElementById('f-abbr').value=''; document.getElementById('f-url').value='';
+  renderModal(); render();
+}
+
+boot();
+</script>
+</body>
+</html>
